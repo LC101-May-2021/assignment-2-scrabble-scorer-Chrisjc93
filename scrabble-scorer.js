@@ -88,7 +88,7 @@ function initialPrompt() {
     checker = 0;
     for(let i = 0 ; i < userInput.length; i++) {
       for(key in newPointStructure) {
-        if  userInput[i] === key) {
+        if (userInput[i] === key) {
           checker++;
         }
       }
