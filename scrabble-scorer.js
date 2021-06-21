@@ -15,44 +15,150 @@ const oldPointStructure = {
 function oldScrabbleScorer(word) {
 	word = word.toUpperCase();
 	let letterPoints = "";
- 
-	for (let i = 0; i < word.length; i++) {
- 
-	  for (const pointValue in oldPointStructure) {
- 
-		 if (oldPointStructure[pointValue].includes(word[i])) {
-			letterPoints += `Points for '${word[i]}': ${pointValue}\n`
-		 }
- 
-	  }
-	}
-	return letterPoints;
+  let score = 0;
+
+  for (let i = 0; i < word.length; i++) {
+    for (const pointValue in newPointStructure) { 
+      if (pointValue === word[i]) {
+      letterPoints += `Points for '${word[i]}': ${newPointStructure[pointValue]}\n`;
+      score = score + Number(newPointStructure[pointValue]);
+      }
+    }
+  }
+  console.log(`${letterPoints}Score for '${word}': ${score}`);
+	return score;
  }
+
+function simpleScrabbleScore(word) {
+  word = word.toUpperCase();
+	let letterPoints = 0;
+
+  for (let i = 0; i < word.length; i++) {
+    letterPoints = letterPoints + 1;
+    console.log(`Points for '${word[i]}': 1`);
+  }
+  console.log(`Score for '${word}': ${letterPoints}`);
+  return letterPoints;
+}
+
+function vowelBonusScore1(word) {
+  word = word.toUpperCase();
+	let letterPoints = 0;
+  const testObj = {
+    3: ['A','E','I','O','U','Y']
+  }
+
+  for (let i = 0; i < word.length; i++) {
+
+    for (const letter in testObj){
+
+      if(testObj[letter].includes(word[i])) {
+        letterPoints = letterPoints + 3;
+        console.log(`Points for '${word[i]}': ${letter}`);
+      } else {
+        letterPoints = letterPoints + 1;
+        console.log(`Points for '${word[i]}': 1`);
+      }
+      
+    }
+  }
+  console.log(`Score for ${word}: ${letterPoints}`);
+  return letterPoints;
+}
 
 // your job is to finish writing these functions and variables that we've named //
 // don't change the names or your program won't work as expected. //
 
 function initialPrompt() {
-   console.log("Let's play some scrabble! Enter a word:");
+   console.log("Let's play some scrabble!\n");
+  let userInput = input.question("Please enter a word to score: ").toUpperCase().trim();
+  let checker = 0;
+  // let az = ["a","b","c","d"];
+
+  /* for(let i = 0 ; i < userInput.length; i++) {
+    if (!az.includes userInput[i])) {
+      console.log( userInput[i]");
+    } else {
+      console.log("wrong input");
+    }
+    
+  } */ // just keeping this code here to work on later. I wanted to make a simplified validation of this using array methods or something.
+
+  while(checker !== userInput.length){
+    checker = 0;
+    for(let i = 0 ; i < userInput.length; i++) {
+      for(key in newPointStructure) {
+        if  userInput[i] === key) {
+          checker++;
+        }
+      }
+    }
+    if(checker !== userInput.length){
+     userInput = input.question("Invalid chracters entered! Please enter a word to score: ").toUpperCase().trim();
+      
+    }
+  }
+
+   return userInput;
+}
+
+let simpleScore = {
+  name: "Simple Score",
+  description: "Each letter is worth 1 point.",
+  score: simpleScrabbleScore
+}
+
+let vowelBonusScore = {
+  name: "Bonus Vowels",
+  description: "Vowels are 3 pts, consonants are 1 pt.",
+  score: vowelBonusScore1
 };
 
-let simpleScore;
+let scrabbleScore = {
+  name: "Scrabble",
+  description: "The traditional scoring algorithm.",
+  score: oldScrabbleScorer
+};
 
-let vowelBonusScore;
+const scoringAlgorithms = [simpleScore,vowelBonusScore,scrabbleScore];
 
-let scrabbleScore;
+function scorerPrompt() {  
+  let scoringChoice = input.question(`Which scoring algorithm would you like to use?.\n 
+    0 - ${scoringAlgorithms[0].name}: ${scoringAlgorithms[0].description}\n
+    1 - ${scoringAlgorithms[1].name}: ${scoringAlgorithms[1].description}\n
+    2 - ${scoringAlgorithms[2].name}: ${scoringAlgorithms[2].description}\n
+    Enter 0, 1, or 2: `);
 
-const scoringAlgorithms = [];
+  while (scoringChoice < 0  || scoringChoice > 2 || scoringChoice === undefined || isNaN(scoringChoice)) {
+    console.log("Incorrect Input, please try again \n");
+    scoringChoice = input.question(`Which scoring algorithm would you like to use?.\n 
+    0 - ${scoringAlgorithms[0].name}: ${scoringAlgorithms[0].description}\n
+    1 - ${scoringAlgorithms[1].name}: ${scoringAlgorithms[1].description}\n
+    2 - ${scoringAlgorithms[2].name}: ${scoringAlgorithms[2].description}\n
+    Enter 0, 1, or 2: `);
+    
+  } 
+  return scoringAlgorithms[Number(scoringChoice)];
+}
+let newPointStructure = transform(oldPointStructure);
 
-function scorerPrompt() {}
+function transform(object) {
+  let newValueKeyPair = "";
+  let newPointStructure1 = {}
+  for (const key in object) {
+      for(let i = 0; i < object[key].length; i++) {
+      newValueKeyPair = object[key][i];
+      newPointStructure1[newValueKeyPair] = key;
+      }
+  }
+  return newPointStructure1;
+};
 
-function transform() {};
 
-let newPointStructure;
 
 function runProgram() {
-   initialPrompt();
-   
+let wordToScore = initialPrompt();
+scorerPrompt().score(wordToScore);
 }
 
 // Don't write any code below this line //
@@ -69,4 +175,3 @@ module.exports = {
 	runProgram: runProgram,
 	scorerPrompt: scorerPrompt
 };
-
