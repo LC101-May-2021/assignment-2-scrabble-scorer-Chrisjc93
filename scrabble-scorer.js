@@ -148,7 +148,7 @@ function transform(object) {
 
 function runProgram() {
 let wordToScore = initialPrompt();
-scorerPrompt().scorerFunction(wordToScore);
+scorerPrompt().scoringFunction(wordToScore);
 }
 
 // Don't write any code below this line //
