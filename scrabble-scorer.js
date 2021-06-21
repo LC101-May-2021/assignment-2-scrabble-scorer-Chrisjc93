@@ -71,7 +71,7 @@ function vowelBonusScore(word) {
 
 function initialPrompt() {
    console.log("Let's play some scrabble!\n");
-  let userInput = input.question("Please enter a word to score: ").toUpperCase().trim();
+  let userInput = input.question("Please enter a word to score: ").toLowerCase().trim();
   let checker = 0;
 
   while(checker !== userInput.length){
@@ -84,7 +84,7 @@ function initialPrompt() {
       }
     }
     if(checker !== userInput.length){
-     userInput = input.question("Invalid chracters entered! Please enter a word to score: ").toUpperCase().trim();
+     userInput = input.question("Invalid chracters entered! Please enter a word to score: ").toLowerCase().trim();
       
     }
   }
@@ -137,7 +137,7 @@ function transform(object) {
   let newPointStructure1 = {}
   for (const key in object) {
       for(let i = 0; i < object[key].length; i++) {
-      newValueKeyPair = object[key][i];
+      newValueKeyPair = object[key][i].toLowerCase();
       newPointStructure1[newValueKeyPair] = key;
       }
   }
