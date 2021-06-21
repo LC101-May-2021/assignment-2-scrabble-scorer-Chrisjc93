@@ -20,16 +20,6 @@ function initialPrompt() {
    console.log("Let's play some scrabble!\n");
   let userInput = input.question("Please enter a word to score: ").toUpperCase().trim();
   let checker = 0;
-  // let az = ["a","b","c","d"];
-
-  /* for(let i = 0 ; i < userInput.length; i++) {
-    if (!az.includes userInput[i])) {
-      console.log( userInput[i]");
-    } else {
-      console.log("wrong input");
-    }
-    
-  } */ // just keeping this code here to work on later. I wanted to make a simplified validation of this using array methods or something.
 
   while(checker !== userInput.length){
     checker = 0;
@@ -149,11 +139,10 @@ function transform(object) {
   return newPointStructure1;
 };
 
-
-
 function runProgram() {
 let wordToScore = initialPrompt();
 scorerPrompt().score(wordToScore);
+
 }
 
 // Don't write any code below this line //
