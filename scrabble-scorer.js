@@ -12,6 +12,59 @@ const oldPointStructure = {
   10: ['Q', 'Z']
 };
 
+function scrabbleScore(word) {
+	word = word.toUpperCase();
+	let letterPoints = "";
+  let score = 0;
+
+  for (let i = 0; i < word.length; i++) {
+    for (const pointValue in newPointStructure) { 
+      if (pointValue === word[i]) {
+      letterPoints += `Points for '${word[i]}': ${newPointStructure[pointValue]}\n`;
+      score = score + Number(newPointStructure[pointValue]);
+      }
+    }
+  }
+  console.log(`${letterPoints}Score for '${word}': ${score}`);
+	return score;
+ }
+
+function simpleScore(word) {
+  word = word.toUpperCase();
+	let letterPoints = 0;
+
+  for (let i = 0; i < word.length; i++) {
+    letterPoints = letterPoints + 1;
+    console.log(`Points for '${word[i]}': 1`);
+  }
+  console.log(`Score for '${word}': ${letterPoints}`);
+  return letterPoints;
+}
+
+function vowelBonusScore(word) {
+  word = word.toUpperCase();
+	let letterPoints = 0;
+  const testObj = {
+    3: ['A','E','I','O','U','Y']
+  }
+
+  for (let i = 0; i < word.length; i++) {
+
+    for (const letter in testObj){
+
+      if(testObj[letter].includes(word[i])) {
+        letterPoints = letterPoints + 3;
+        console.log(`Points for '${word[i]}': ${letter}`);
+      } else {
+        letterPoints = letterPoints + 1;
+        console.log(`Points for '${word[i]}': 1`);
+      }
+      
+    }
+  }
+  console.log(`Score for ${word}: ${letterPoints}`);
+  return letterPoints;
+}
 
 // your job is to finish writing these functions and variables that we've named //
 // don't change the names or your program won't work as expected. //
@@ -38,74 +91,26 @@ function initialPrompt() {
 
    return userInput;
 }
-// I thought autograder was failing so I made my functions into anonymous functions, it still fails, but the program works so.....
+
 let simpleScore = {
   name: "Simple Score",
   description: "Each letter is worth 1 point.",
-  score: function (word) {
-  word = word.toUpperCase();
-	let letterPoints = 0;
-
-  for (let i = 0; i < word.length; i++) {
-    letterPoints = letterPoints + 1;
-    console.log(`Points for '${word[i]}': 1`);
-  }
-  console.log(`Score for '${word}': ${letterPoints}`);
-  return letterPoints;
+  score: simpleScore
 }
-};
 
 let vowelBonusScore = {
   name: "Bonus Vowels",
   description: "Vowels are 3 pts, consonants are 1 pt.",
-  score: function (word) {
-  word = word.toUpperCase();
-	let letterPoints = 0;
-  const vowles = {
-    3: ['A','E','I','O','U','Y']
-  }
-
-  for (let i = 0; i < word.length; i++) {
-
-    for (const letter in vowles){
-
-      if(vowles[letter].includes(word[i])) {
-        letterPoints = letterPoints + 3;
-        console.log(`Points for '${word[i]}': ${letter}`);
-      } else {
-        letterPoints = letterPoints + 1;
-        console.log(`Points for '${word[i]}': 1`);
-      }
-      
-    }
-  }
-  console.log(`Score for ${word}: ${letterPoints}`);
-  return letterPoints;
-}
+  score: vowelBonusScore
 };
 
 let scrabbleScore = {
   name: "Scrabble",
   description: "The traditional scoring algorithm.",
-  score: function (word) {
-	word = word.toUpperCase();
-	let letterPoints = "";
-  let score = 0;
-
-  for (let i = 0; i < word.length; i++) {
-    for (const pointValue in newPointStructure) { 
-      if (pointValue === word[i]) {
-      letterPoints += `Points for '${word[i]}': ${newPointStructure[pointValue]}\n`;
-      score = score + Number(newPointStructure[pointValue]);
-      }
-    }
-  }
-  console.log(`${letterPoints}Score for '${word}': ${score}`);
-	return score;
- }
+  score: scrabbleScore
 };
 
-const scoringAlgorithms = [simpleScore,vowelBonusScore,scrabbleScore];
+const scoringAlgorithms = [simpleScore1,vowelBonusScore1,scrabbleScore1];
 
 function scorerPrompt() {  
   let scoringChoice = input.question(`Which scoring algorithm would you like to use?.\n 
@@ -139,10 +144,11 @@ function transform(object) {
   return newPointStructure1;
 };
 
+
+
 function runProgram() {
 let wordToScore = initialPrompt();
 scorerPrompt().score(wordToScore);
-
 }
 
 // Don't write any code below this line //
