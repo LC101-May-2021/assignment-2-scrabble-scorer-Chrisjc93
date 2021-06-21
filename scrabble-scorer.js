@@ -138,7 +138,7 @@ function transform(object) {
   for (const key in object) {
       for(let i = 0; i < object[key].length; i++) {
       newValueKeyPair = object[key][i].toLowerCase();
-      newPointStructure1[newValueKeyPair] = key;
+      newPointStructure1[newValueKeyPair] = Number(key);
       }
   }
   return newPointStructure1;
@@ -147,6 +147,7 @@ function transform(object) {
 
 
 function runProgram() {
+  console.log(transform(oldPointStructure));
 let wordToScore = initialPrompt();
 scorerPrompt().score(wordToScore);
 }
