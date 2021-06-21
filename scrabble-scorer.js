@@ -147,9 +147,8 @@ function transform(object) {
 
 
 function runProgram() {
-  console.log(transform(oldPointStructure));
 let wordToScore = initialPrompt();
-scorerPrompt().score(wordToScore);
+scorerPrompt().scorerFunction(wordToScore);
 }
 
 // Don't write any code below this line //
