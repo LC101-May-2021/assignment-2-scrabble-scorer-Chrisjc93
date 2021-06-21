@@ -13,7 +13,7 @@ const oldPointStructure = {
 };
 
 function scrabbleScore(word) {
-	word = word.toUpperCase();
+	word = word.toLowerCase();
 	let letterPoints = "";
   let score = 0;
 
@@ -30,7 +30,7 @@ function scrabbleScore(word) {
  }
 
 function simpleScore(word) {
-  word = word.toUpperCase();
+  word = word.toLowerCase();
 	let letterPoints = 0;
 
   for (let i = 0; i < word.length; i++) {
@@ -42,10 +42,10 @@ function simpleScore(word) {
 }
 
 function vowelBonusScore(word) {
-  word = word.toUpperCase();
+  word = word.toLowerCase();
 	let letterPoints = 0;
   const testObj = {
-    3: ['A','E','I','O','U','Y']
+    3: ['a','e','i','o','u','y']
   }
 
   for (let i = 0; i < word.length; i++) {
